@@ -1,3 +1,5 @@
+![](captured.gif)
+
 ## About This Project
 
   The Ideia of the App is:
