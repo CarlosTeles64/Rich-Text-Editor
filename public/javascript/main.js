@@ -1,32 +1,34 @@
-const fontName = document.getElementById('fontFamily')
-const fontSize = document.getElementById('fontSize')
-var editorWindow = document.getElementById('textEditor').contentDocument
+const fontName = document.getElementById('fontFamily');
+const fontSize = document.getElementById('fontSize');
+const editorWindow = document.getElementById('textEditor').contentDocument;
 
-function fetchAllSizes () {
-  for (i = 1; i < 7; i++) {
-    fontSize.innerHTML += `<option value="${i}">${i}</option>`
+const url =
+  'https://www.googleapis.com/webfonts/v1/webfonts?key=AIzaSyCUs7iKo_yJ3dqY4o3qkk9DEBvpzZnRi_g';
+
+function fetchSizes() {
+  for (i = 1; i <= 7; i++) {
+    fontSize.innerHTML += `<option value="${i}">${i}</option>`;
   }
 }
-
-function onLoad () {
-  editorWindow.designMode = 'On'
-  fetchAllSizes()
+function doRichTextCommand(cmd, arg) {
+  if (cmd === 'createLink') {
+    arg = prompt('https:// link here...');
+  }
+  editorWindow.execCommand(cmd, false, arg);
 }
 
-function doRichTextCommand (cmd, arg) {
-  editorWindow.execCommand(cmd, false, arg)
-}
-
-window.addEventListener('load', onLoad)
+window.addEventListener('load', () => {
+  editorWindow.designMode = 'On';
+  fetchSizes();
+});
 
 fontSize.addEventListener('change', (event) => {
-  const selectedSize = event.target.value
-  console.log(selectedSize)
-  doRichTextCommand('fontSize', selectedSize)
-})
+  const selectedSize = event.target.value;
+  doRichTextCommand('fontSize', selectedSize);
+});
 
 fontName.addEventListener('change', (event) => {
-  const selectedFont = event.target.value
+  const selectedFont = event.target.value;
   console.log(selectedFont)
-  doRichTextCommand('fontName', selectedFont)
-})
+  doRichTextCommand('fontName', selectedFont);
+});
